@@ -3,10 +3,10 @@ import 'package:fl_chart/fl_chart.dart';
 class Token {
   final String name;
   final String symbol;
-  String? description;
   final String image;
   final String id;
   final double currentPrice;
+  String? description;
   FlSpot? priceData;
 
   Token({
@@ -25,6 +25,5 @@ class Token {
         image: json['image'],
         id: json['id'],
         currentPrice: json['current_price'].toDouble(),
-        // description: json['description']['en'],
       );
 }

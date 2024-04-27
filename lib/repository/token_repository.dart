@@ -8,23 +8,38 @@ class TokenRepository {
   TokenRepository(this._dio);
 
   Future<List<Token>> getTokenList() async {
-    final response = await _dio.get(
-      'https://api.coingecko.com/api/v3/coins/markets',
-      queryParameters: {'vs_currency': 'usd'},
-    );
-    print(response.data[0]['image']);
-    List<Token> tokens = response.data
-        .map<Token>((token) => Token.fromJson(token))
-        .toList(); // for (Token token in tokens) {
-    //   token.priceData = await fetchTokenPriceData(token.id);
-    // }
-    return tokens;
+    var url = 'https://api.coingecko.com/api/v3/coins/markets';
+
+    try {
+      final response = await _dio.get(
+        url,
+        queryParameters: {'vs_currency': 'usd'},
+      );
+      if (response.statusCode == 200) {
+        List<Token> tokens =
+            response.data.map<Token>((token) => Token.fromJson(token)).toList();
+        return tokens;
+      } else {
+        throw Exception('Failed to load token list, status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Dio error: ${e.toString()}');
+    }
   }
 
   Future<Map<String, dynamic>> getTokenDetails(String id) async {
-    final response =
-        await _dio.get('https://api.coingecko.com/api/v3/coins/$id');
-    return response.data;
+    var url = 'https://api.coingecko.com/api/v3/coins/$id';
+
+    try {
+      final response = await _dio.get(url);
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        throw Exception('Failed to load token details, status code: ${response.statusCode}');
+      }
+    } catch (e) {
+      throw Exception('Dio error: ${e.toString()}');
+    }
   }
 
   Future<List<FlSpot>> fetchTokenPriceData(String tokenId) async {
@@ -42,7 +57,7 @@ class TokenRepository {
         }).toList();
         return spots;
       } else {
-        throw Exception('Failed to load token price data');
+        throw Exception('Failed to load token price data, status code: ${response.statusCode}');
       }
     } on DioException catch (e) {
       throw Exception('Dio error: ${e.message}');

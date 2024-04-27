@@ -33,7 +33,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
 
   _onGetAllTokens(LoadTokens event, Emitter<TokenState> emit) async {
     _publishState(emit, isLoading: true);
-
+    
     final List<Token> tokens = await tokenRepository.getTokenList();
 
     _publishState(emit, allTokens: tokens, filteredTokens: tokens);
