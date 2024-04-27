@@ -30,9 +30,9 @@ void main() {
       },
       act: (bloc) => bloc.add(LoadTokens()),
       expect: () => [
-        isA<TokenState>().having((s) => s.isLoading, 'isLoading', true),
+        isA<TokenState>().having((s) => s.status, 'status', TokenStateStatus.loading),
         isA<TokenState>()
-          .having((s) => s.isLoading, 'isLoading', false)
+          .having((s) => s.status, 'status', TokenStateStatus.loaded)
           .having((s) => s.allTokens, 'allTokens', isNotEmpty),
       ],
     );
