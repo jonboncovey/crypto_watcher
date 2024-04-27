@@ -20,7 +20,8 @@ class TokenRepository {
             response.data.map<Token>((token) => Token.fromJson(token)).toList();
         return tokens;
       } else {
-        throw Exception('Failed to load token list, status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load token list, status code: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Dio error: ${e.toString()}');
@@ -35,7 +36,8 @@ class TokenRepository {
       if (response.statusCode == 200) {
         return response.data;
       } else {
-        throw Exception('Failed to load token details, status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load token details, status code: ${response.statusCode}');
       }
     } catch (e) {
       throw Exception('Dio error: ${e.toString()}');
@@ -57,7 +59,8 @@ class TokenRepository {
         }).toList();
         return spots;
       } else {
-        throw Exception('Failed to load token price data, status code: ${response.statusCode}');
+        throw Exception(
+            'Failed to load token price data, status code: ${response.statusCode}');
       }
     } on DioException catch (e) {
       throw Exception('Dio error: ${e.message}');

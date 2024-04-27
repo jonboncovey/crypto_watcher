@@ -4,10 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class TokenListScreen extends StatelessWidget {
+  const TokenListScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: const Text('Token List')),
       body: Column(
         children: [
           Padding(
@@ -26,7 +27,8 @@ class TokenListScreen extends StatelessWidget {
             child:
                 BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
               if (state.status == TokenStateStatus.error) {
-                return const Center(child: Text('Error Loading Token List >.<'));
+                return const Center(
+                    child: Text('Error Loading Token List >.<'));
               }
               return ListView.builder(
                 itemCount: state.filteredTokens.length,

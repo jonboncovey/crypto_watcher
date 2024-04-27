@@ -18,7 +18,7 @@ class TokenListItem extends StatelessWidget {
       subtitle: Text('\$${token.symbol.toUpperCase()}'),
       trailing: Text(
         '\$${token.currentPrice.toString()}',
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
+        style: const TextStyle(fontSize: 16, fontWeight: FontWeight.w300),
       ),
       onTap: () {
         BlocProvider.of<TokenBloc>(context).add(SelectToken(token));

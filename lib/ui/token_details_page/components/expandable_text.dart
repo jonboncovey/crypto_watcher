@@ -19,7 +19,7 @@ class ExpandableText extends StatelessWidget {
       context: context,
       builder: (BuildContext context) {
         return AlertDialog(
-          content: Container(
+          content: SizedBox(
             height: MediaQuery.of(context).size.height * 0.7,
             width: MediaQuery.of(context).size.width * 0.9,
             child: SingleChildScrollView(
@@ -43,9 +43,11 @@ class ExpandableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return CwContainer(
       child: BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
-        if (state.status == TokenStateStatus.loading) return const Text('Loading...');
-        if (state.status == TokenStateStatus.error)
+        if (state.status == TokenStateStatus.loading)
+          return const Text('Loading...');
+        if (state.status == TokenStateStatus.error) {
           return const Center(child: Text('Error Loading Description >.<'));
+        }
         return InkWell(
           onTap: () => _showFullText(
               context, state.selectedToken.description ?? 'Loading...'),

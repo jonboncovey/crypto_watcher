@@ -76,16 +76,21 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
         ),
         selectedTokenPriceData: []);
 
-    final tokenPriceData =
-        await tokenRepository.fetchTokenPriceData(event.token.id);
-    final tokenDetails = await tokenRepository.getTokenDetails(event.token.id);
-    event.token.description = tokenDetails['description']['en'];
+    try {
+      final tokenPriceData =
+          await tokenRepository.fetchTokenPriceData(event.token.id);
+      final tokenDetails =
+          await tokenRepository.getTokenDetails(event.token.id);
+      event.token.description = tokenDetails['description']['en'];
 
-    _publishState(
-      emit,
-      selectedToken: event.token,
-      selectedTokenPriceData: tokenPriceData,
-    );
+      _publishState(
+        emit,
+        selectedToken: event.token,
+        selectedTokenPriceData: tokenPriceData,
+      );
+    } catch (e) {
+      _publishState(emit, status: TokenStateStatus.error);
+    }
   }
 
   void _publishState(

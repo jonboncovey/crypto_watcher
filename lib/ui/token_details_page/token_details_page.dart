@@ -15,7 +15,8 @@ class TokenDetailsScreen extends StatelessWidget {
         appBar: AppBar(
           title: BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
             if (state.status == TokenStateStatus.error) {
-              return const Center(child: Text('Error Loading Token Details >.<'));
+              return const Center(
+                  child: Text('Error Loading Token Details >.<'));
             }
             return Text(
               state.selectedToken.name,
