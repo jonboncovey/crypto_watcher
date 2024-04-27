@@ -10,8 +10,11 @@ class TokenDetailsCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return CwContainer(
       child: BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
-        if (state.isLoading) {
+        if (state.status == TokenStateStatus.loading) {
           return const Center(child: CircularProgressIndicator());
+        }
+        if (state.status == TokenStateStatus.error) {
+          return const Center(child: Text('Error Loading Token Details >.<'));
         }
         return Column(children: [
           Row(

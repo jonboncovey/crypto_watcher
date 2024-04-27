@@ -15,8 +15,11 @@ class PriceChart extends StatelessWidget {
         width: double.infinity,
         child: BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
           ColorScheme colorScheme = Theme.of(context).colorScheme;
-          if (state.isLoading) {
+          if (state.status == TokenStateStatus.loading) {
             return const Center(child: CircularProgressIndicator());
+          }
+          if (state.status == TokenStateStatus.error) {
+            return const Center(child: Text('Error Loading Price Graph >.>'));
           }
 
           return LineChart(

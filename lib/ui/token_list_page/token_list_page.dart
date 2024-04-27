@@ -7,17 +7,16 @@ class TokenListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text('Token List')),
+      appBar: AppBar(title: const Text('Token List')),
       body: Column(
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
             child: TextField(
               onChanged: (query) {
-                print('hit');
                 BlocProvider.of<TokenBloc>(context).add(SearchTokens(query));
               },
-              decoration: InputDecoration(
+              decoration: const InputDecoration(
                 hintText: 'Search tokens...',
                 prefixIcon: Icon(Icons.search),
               ),
@@ -26,6 +25,9 @@ class TokenListScreen extends StatelessWidget {
           Expanded(
             child:
                 BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
+              if (state.status == TokenStateStatus.error) {
+                return const Center(child: Text('Error Loading Token List >.<'));
+              }
               return ListView.builder(
                 itemCount: state.filteredTokens.length,
                 itemBuilder: (context, index) {

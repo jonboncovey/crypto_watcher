@@ -1,18 +1,24 @@
 part of 'token_bloc.dart';
 
+enum TokenStateStatus {
+  loading,
+  loaded,
+  error,
+}
+
 class TokenState extends Equatable {
   final List<Token> allTokens;
   final List<Token> filteredTokens;
   final Token selectedToken;
   final List<FlSpot> selectedTokenPriceData;
-  final bool isLoading;
+  final TokenStateStatus status;
 
-  TokenState({
+  const TokenState({
     required this.allTokens,
     required this.selectedToken,
     required this.filteredTokens,
     required this.selectedTokenPriceData,
-    required this.isLoading,
+    required this.status,
   });
 
   @override
@@ -21,6 +27,6 @@ class TokenState extends Equatable {
         selectedToken,
         filteredTokens,
         selectedTokenPriceData,
-        isLoading,
+        status,
       ];
 }

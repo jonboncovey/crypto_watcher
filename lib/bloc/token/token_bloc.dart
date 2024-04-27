@@ -23,7 +23,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
             ),
             filteredTokens: [],
             selectedTokenPriceData: [],
-            isLoading: false)) {
+            status: TokenStateStatus.loading)) {
     on<LoadTokens>((event, emit) => _onGetAllTokens(event, emit));
     on<SearchTokens>((event, emit) => _onSearchTokens(event, emit));
     on<SelectToken>((event, emit) => _onSelectToken(event, emit));
@@ -32,8 +32,8 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
   }
 
   _onGetAllTokens(LoadTokens event, Emitter<TokenState> emit) async {
-    _publishState(emit, isLoading: true);
-    
+    _publishState(emit, status: TokenStateStatus.loading);
+
     final List<Token> tokens = await tokenRepository.getTokenList();
 
     _publishState(emit, allTokens: tokens, filteredTokens: tokens);
@@ -41,7 +41,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
 
   _onFetchTokenPriceData(
       FetchTokenPriceData event, Emitter<TokenState> emit) async {
-    _publishState(emit, isLoading: true);
+    _publishState(emit, status: TokenStateStatus.loading);
 
     final tokenPriceData =
         await tokenRepository.fetchTokenPriceData(event.tokenId);
@@ -65,7 +65,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
 
   _onSelectToken(SelectToken event, Emitter<TokenState> emit) async {
     _publishState(emit,
-        isLoading: true,
+        status: TokenStateStatus.loading,
         selectedToken: Token(
           name: '',
           symbol: '',
@@ -94,7 +94,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
     Token? selectedToken,
     List<Token>? filteredTokens,
     List<FlSpot>? selectedTokenPriceData,
-    bool? isLoading,
+    TokenStateStatus? status,
   }) {
     emit(TokenState(
       allTokens: allTokens ?? state.allTokens,
@@ -102,7 +102,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
       filteredTokens: filteredTokens ?? state.filteredTokens,
       selectedTokenPriceData:
           selectedTokenPriceData ?? state.selectedTokenPriceData,
-      isLoading: isLoading ?? false,
+      status: status ?? TokenStateStatus.loaded,
     ));
   }
 }
