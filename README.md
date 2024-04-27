@@ -1,6 +1,8 @@
 # crypto_watcher
 
-A new Flutter project.
+This is my submission for the EspressoCash challenge.
+
+A user should be able to clone this repo, run flutter pub get, then build the app successfully.
 
 ## Getting Started
 
