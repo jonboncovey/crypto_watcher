@@ -83,6 +83,7 @@ class TokenBloc extends Bloc<TokenEvent, TokenState> {
           await tokenRepository.getTokenDetails(event.token.id);
       event.token.description = tokenDetails['description']['en'];
 
+
       _publishState(
         emit,
         selectedToken: event.token,

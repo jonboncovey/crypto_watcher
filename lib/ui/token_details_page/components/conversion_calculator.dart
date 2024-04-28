@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConversionCalculator extends StatefulWidget {
-  const ConversionCalculator({super.key});
+  const ConversionCalculator({Key? key}) : super(key: key);
 
   @override
   _ConversionCalculatorState createState() => _ConversionCalculatorState();
@@ -51,19 +51,44 @@ class _ConversionCalculatorState extends State<ConversionCalculator> {
               onChanged: (_) => _updatePrice(state.selectedToken.currentPrice),
               decoration: const InputDecoration(
                 labelText: 'USD',
-                prefixIcon: Icon(Icons.attach_money),
+                border: InputBorder.none,
+                // prefixIcon: Icon(Icons.attach_money),
               ),
+              textAlign: TextAlign.center, // Center the text
+
               keyboardType: TextInputType.number,
             ),
-            const SizedBox(height: 8),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Container(
+                      height: 1,
+                      color: Theme.of(context).colorScheme.background),
+                ),
+                 Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                  child: Icon(Icons.currency_exchange,
+                      color: Theme.of(context).colorScheme.background),
+                ),
+                Expanded(
+                  child: Container(
+                      height: 1,
+                      color: Theme.of(context).colorScheme.background),
+                ),
+              ],
+            ),
             TextField(
               controller: _quantityController,
               onChanged: (_) =>
                   _updateQuantity(state.selectedToken.currentPrice),
-              decoration: const InputDecoration(
-                labelText: 'Quantity',
-                prefixIcon: Icon(Icons.confirmation_number),
+              decoration: InputDecoration(
+                labelText: state.selectedToken.symbol.toUpperCase(),
+                border: InputBorder.none,
+                // prefixIcon: const Icon(Icons.curre),
               ),
+              textAlign: TextAlign.center, // Center the text
+
               keyboardType: TextInputType.number,
             ),
           ],

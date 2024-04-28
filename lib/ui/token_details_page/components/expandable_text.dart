@@ -3,6 +3,7 @@ import 'package:crypto_watcher/ui/core/cw_container.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ExpandableText extends StatelessWidget {
   final int maxLines;
@@ -23,7 +24,11 @@ class ExpandableText extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.7,
             width: MediaQuery.of(context).size.width * 0.9,
             child: SingleChildScrollView(
-              child: Html(data: text),
+              child: Html(data: text, onLinkTap:(url, _, __) {
+                  if (url?.isNotEmpty ?? false) {
+                    launchUrl(Uri.parse(url!));
+                  }
+                },),
             ),
           ),
           actions: <Widget>[
@@ -43,20 +48,16 @@ class ExpandableText extends StatelessWidget {
   Widget build(BuildContext context) {
     return CwContainer(
       child: BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
-        if (state.status == TokenStateStatus.loading)
+        if (state.status == TokenStateStatus.loading) {
           return const Text('Loading...');
+        }
         if (state.status == TokenStateStatus.error) {
           return const Center(child: Text('Error Loading Description >.<'));
         }
         return InkWell(
           onTap: () => _showFullText(
               context, state.selectedToken.description ?? 'Loading...'),
-          child: Text(
-            state.selectedToken.description ?? 'Loading...',
-            style: style,
-            maxLines: maxLines,
-            overflow: TextOverflow.ellipsis,
-          ),
+          child: Html(data: '${state.selectedToken.description!.substring(0, 250)}...' ),
         );
       }),
     );

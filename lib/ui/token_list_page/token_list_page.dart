@@ -9,37 +9,39 @@ class TokenListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: TextField(
-              onChanged: (query) {
-                BlocProvider.of<TokenBloc>(context).add(SearchTokens(query));
-              },
-              decoration: const InputDecoration(
-                hintText: 'Search tokens...',
-                prefixIcon: Icon(Icons.search),
+      body: SafeArea(
+        child: Column(
+          children: [
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: TextField(
+                onChanged: (query) {
+                  BlocProvider.of<TokenBloc>(context).add(SearchTokens(query));
+                },
+                decoration: const InputDecoration(
+                  hintText: 'Search tokens...',
+                  prefixIcon: Icon(Icons.search),
+                ),
               ),
             ),
-          ),
-          Expanded(
-            child:
-                BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
-              if (state.status == TokenStateStatus.error) {
-                return const Center(
-                    child: Text('Error Loading Token List >.<'));
-              }
-              return ListView.builder(
-                itemCount: state.filteredTokens.length,
-                itemBuilder: (context, index) {
-                  final token = state.filteredTokens[index];
-                  return TokenListItem(token: token);
-                },
-              );
-            }),
-          ),
-        ],
+            Expanded(
+              child:
+                  BlocBuilder<TokenBloc, TokenState>(builder: (context, state) {
+                if (state.status == TokenStateStatus.error) {
+                  return const Center(
+                      child: Text('Error Loading Token List >.<'));
+                }
+                return ListView.builder(
+                  itemCount: state.filteredTokens.length,
+                  itemBuilder: (context, index) {
+                    final token = state.filteredTokens[index];
+                    return TokenListItem(token: token);
+                  },
+                );
+              }),
+            ),
+          ],
+        ),
       ),
     );
   }
