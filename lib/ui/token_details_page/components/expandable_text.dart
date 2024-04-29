@@ -10,10 +10,10 @@ class ExpandableText extends StatelessWidget {
   final TextStyle? style;
 
   const ExpandableText({
-    Key? key,
+    super.key,
     this.maxLines = 6,
     this.style,
-  }) : super(key: key);
+  });
 
   void _showFullText(BuildContext context, String text) {
     showDialog(
@@ -24,11 +24,14 @@ class ExpandableText extends StatelessWidget {
             height: MediaQuery.of(context).size.height * 0.7,
             width: MediaQuery.of(context).size.width * 0.9,
             child: SingleChildScrollView(
-              child: Html(data: text, onLinkTap:(url, _, __) {
+              child: Html(
+                data: text,
+                onLinkTap: (url, _, __) {
                   if (url?.isNotEmpty ?? false) {
                     launchUrl(Uri.parse(url!));
                   }
-                },),
+                },
+              ),
             ),
           ),
           actions: <Widget>[
@@ -57,7 +60,8 @@ class ExpandableText extends StatelessWidget {
         return InkWell(
           onTap: () => _showFullText(
               context, state.selectedToken.description ?? 'Loading...'),
-          child: Html(data: '${state.selectedToken.description!.substring(0, 250)}...' ),
+          child: Html(
+              data: '${state.selectedToken.description!.substring(0, 250)}...'),
         );
       }),
     );

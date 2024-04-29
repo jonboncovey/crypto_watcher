@@ -13,7 +13,6 @@ final darkColorScheme = ColorScheme.fromSeed(
   brightness: Brightness.dark,
 );
 
-// Define the light and dark themes
 final lightTheme = ThemeData(
   fontFamily: 'OpenSans',
   colorScheme: lightColorScheme,
@@ -23,7 +22,6 @@ final darkTheme = ThemeData(
   colorScheme: darkColorScheme,
 );
 
-// Create the ThemeCubit
 class ThemeCubit extends Cubit<ThemeData> {
   ThemeCubit() : super(darkTheme);
 

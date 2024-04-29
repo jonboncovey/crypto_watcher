@@ -7,7 +7,7 @@ class Token {
   final String id;
   final double currentPrice;
   String? description;
-  FlSpot? priceData;
+  List<FlSpot>? priceData;
 
   Token({
     required this.name,

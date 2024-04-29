@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ConversionCalculator extends StatefulWidget {
-  const ConversionCalculator({Key? key}) : super(key: key);
+  const ConversionCalculator({super.key});
 
   @override
   _ConversionCalculatorState createState() => _ConversionCalculatorState();
@@ -52,10 +52,8 @@ class _ConversionCalculatorState extends State<ConversionCalculator> {
               decoration: const InputDecoration(
                 labelText: 'USD',
                 border: InputBorder.none,
-                // prefixIcon: Icon(Icons.attach_money),
               ),
-              textAlign: TextAlign.center, // Center the text
-
+              textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
             ),
             Row(
@@ -66,7 +64,7 @@ class _ConversionCalculatorState extends State<ConversionCalculator> {
                       height: 1,
                       color: Theme.of(context).colorScheme.background),
                 ),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 8.0),
                   child: Icon(Icons.currency_exchange,
                       color: Theme.of(context).colorScheme.background),
@@ -85,10 +83,8 @@ class _ConversionCalculatorState extends State<ConversionCalculator> {
               decoration: InputDecoration(
                 labelText: state.selectedToken.symbol.toUpperCase(),
                 border: InputBorder.none,
-                // prefixIcon: const Icon(Icons.curre),
               ),
-              textAlign: TextAlign.center, // Center the text
-
+              textAlign: TextAlign.center,
               keyboardType: TextInputType.number,
             ),
           ],

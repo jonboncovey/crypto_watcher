@@ -21,11 +21,26 @@ void main() {
   group('getTokenList', () {
     test('returns list of tokens on successful API call', () async {
       final responseData = [
-        {'name': 'Bitcoin', 'symbol': 'btc', 'image': 'bitcoin.png', 'id': 'bitcoin', 'current_price': 50000.0},
-        {'name': 'Ethereum', 'symbol': 'eth', 'image': 'ethereum.png', 'id': 'ethereum', 'current_price': 3000.0},
+        {
+          'name': 'Bitcoin',
+          'symbol': 'btc',
+          'image': 'bitcoin.png',
+          'id': 'bitcoin',
+          'current_price': 50000.0
+        },
+        {
+          'name': 'Ethereum',
+          'symbol': 'eth',
+          'image': 'ethereum.png',
+          'id': 'ethereum',
+          'current_price': 3000.0
+        },
       ];
       when(mockDio.get(any, queryParameters: anyNamed('queryParameters')))
-          .thenAnswer((_) async => Response(data: responseData, statusCode: 200, requestOptions: RequestOptions(data: responseData)));
+          .thenAnswer((_) async => Response(
+              data: responseData,
+              statusCode: 200,
+              requestOptions: RequestOptions(data: responseData)));
 
       final result = await tokenRepository.getTokenList();
 
@@ -45,8 +60,15 @@ void main() {
 
   group('getTokenDetails', () {
     test('returns token details on successful API call', () async {
-      final responseData = {'name': 'Bitcoin', 'symbol': 'btc', 'description': {'en': 'Bitcoin description'}};
-      when(mockDio.get(any)).thenAnswer((_) async => Response(data: responseData, statusCode: 200, requestOptions: RequestOptions(data: responseData)));
+      final responseData = {
+        'name': 'Bitcoin',
+        'symbol': 'btc',
+        'description': {'en': 'Bitcoin description'}
+      };
+      when(mockDio.get(any)).thenAnswer((_) async => Response(
+          data: responseData,
+          statusCode: 200,
+          requestOptions: RequestOptions(data: responseData)));
 
       final result = await tokenRepository.getTokenDetails('bitcoin');
 
@@ -56,7 +78,8 @@ void main() {
     });
 
     test('throws exception on API call error', () {
-      when(mockDio.get(any)).thenThrow(DioException(requestOptions: RequestOptions(path: '')));
+      when(mockDio.get(any))
+          .thenThrow(DioException(requestOptions: RequestOptions(path: '')));
 
       expect(() => tokenRepository.getTokenDetails('bitcoin'), throwsException);
     });
@@ -64,11 +87,16 @@ void main() {
 
   group('fetchTokenPriceData', () {
     test('returns list of FlSpot on successful API call', () async {
-      final responseData = {'prices': [
-        [1685232000000, 27000.123456789012],
-        [1685318400000, 27100.123456789012],
-      ]};
-      when(mockDio.get(any)).thenAnswer((_) async => Response(data: responseData, statusCode: 200, requestOptions: RequestOptions(data: responseData)));
+      final responseData = {
+        'prices': [
+          [1685232000000, 27000.123456789012],
+          [1685318400000, 27100.123456789012],
+        ]
+      };
+      when(mockDio.get(any)).thenAnswer((_) async => Response(
+          data: responseData,
+          statusCode: 200,
+          requestOptions: RequestOptions(data: responseData)));
 
       final result = await tokenRepository.fetchTokenPriceData('bitcoin');
 
@@ -81,9 +109,11 @@ void main() {
     });
 
     test('throws exception on API call error', () {
-      when(mockDio.get(any)).thenThrow(DioException(requestOptions: RequestOptions(path: '')));
+      when(mockDio.get(any))
+          .thenThrow(DioException(requestOptions: RequestOptions(path: '')));
 
-      expect(() => tokenRepository.fetchTokenPriceData('bitcoin'), throwsException);
+      expect(() => tokenRepository.fetchTokenPriceData('bitcoin'),
+          throwsException);
     });
   });
 }

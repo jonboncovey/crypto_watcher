@@ -30,7 +30,7 @@ class PriceChart extends StatelessWidget {
               lineBarsData: [
                 LineChartBarData(
                   color: colorScheme.primary,
-                  spots: state.selectedTokenPriceData,
+                  spots: state.selectedToken.priceData ?? [],
                   isCurved: true,
                   barWidth: 2,
                   dotData: const FlDotData(show: false),
